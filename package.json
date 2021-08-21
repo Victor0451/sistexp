@@ -1,0 +1,32 @@
+{
+  "name": "sistexp",
+  "version": "1.0.0",
+  "author": "Wersoft",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start -p $PORT",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^1.21.0",
+    "axios": "^0.21.1",
+    "js-file-download": "^0.4.12",
+    "match-sorter": "^6.3.0",
+    "moment": "^2.29.1",
+    "next": "^11.1.0",
+    "next-use-contextual-routing": "^2.1.0",
+    "nodemailer": "^6.6.3",
+    "react": "17.0.2",
+    "react-big-calendar": "^0.28.6",
+    "react-confirm-alert": "^2.7.0",
+    "react-dom": "17.0.2",
+    "react-table": "^6.11.5",
+    "toastr": "^2.1.4"
+  },
+  "devDependencies": {
+    "eslint": "7.31.0",
+    "eslint-config-next": "11.0.1"
+  }
+}
