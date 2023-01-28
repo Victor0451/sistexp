@@ -8,8 +8,8 @@ module.exports = {
   },
 
   env: {
-    'MYSQL_HOST': '192.168.1.102',
-    'MYSQL_PORT': '3306',
+    'MYSQL_HOST': '190.231.67.172',
+    'MYSQL_PORT': '5506',
     'MYSQL_DATABASE': "sistexp",
     'MYSQL_USER': "vlongo",
     'MYSQL_PASSWORD': "nokia5800",
