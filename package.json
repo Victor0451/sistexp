@@ -1,0 +1,47 @@
+{
+  "name": "sistexp",
+  "private": true,
+  "author": "Ing. Longo Victor Manuel <victor.m.longo@gmail.com>",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@chakra-ui/icons": "^2.0.13",
+    "@chakra-ui/react": "^2.4.3",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@fullcalendar/core": "^6.0.3",
+    "@fullcalendar/daygrid": "^6.0.3",
+    "@fullcalendar/react": "^6.0.4",
+    "axios": "^0.26.0",
+    "express": "^4.17.2",
+    "framer-motion": "^6.5.1",
+    "fs": "^0.0.1-security",
+    "fullcalendar": "^6.0.3",
+    "js-cookie": "^3.0.1",
+    "moment": "^2.29.1",
+    "next": "^13.0.7",
+    "react": "^18.2.0",
+    "react-data-table-component": "^7.5.3",
+    "react-dom": "^18.2.0",
+    "react-export-excel": "^0.5.3",
+    "react-export-table-to-excel": "^1.0.6",
+    "react-spreadsheet": "^0.7.7",
+    "scheduler": "^0.23.0",
+    "serverless-mysql": "^1.5.4",
+    "toastr": "^2.1.4",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "eslint": "8.9.0",
+    "eslint-config-next": "^13.0.7"
+  },
+  "browser": {
+    "fs": false,
+    "path": false,
+    "os": false
+  }
+}
