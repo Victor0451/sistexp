@@ -15,7 +15,7 @@ export default async function handlerProductos(req, res) {
 
                     query: `SELECT * 
                             FROM clientes 
-                            WHERE estado = 1
+                            
                             `,
 
                 });

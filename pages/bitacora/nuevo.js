@@ -30,19 +30,51 @@ const Nuevo = () => {
         }
 
 
-        await axios.post(`/api/bitacora/bitacora`, bit)
-            .then(res => {
+        if (bit.fecha === "") {
 
-                if (res.data.msg === 'Bitacora Registrada') {
+            guardarErrores("Debes ingresar una fecha")
 
-                    toastr.success("Bitacora registrada", "ATENCION")
+        } else if (bit.titulo === "") {
 
-                }
+            guardarErrores("Debes ingresar un titulo")
 
-            })
-            .catch(error => {
-                console.log(error)
-            })
+        } else if (bit.descripcion === "") {
+
+            guardarErrores("Debes ingresar una descripcion")
+
+        } else {
+
+
+            await axios.post(`/api/bitacora/bitacora`, bit)
+                .then(res => {
+
+                    if (res.data.msg === 'Bitacora Registrada') {
+
+                        toastr.success("Bitacora registrada", "ATENCION")
+
+                        setTimeout(() => {
+
+                            let accion = `Se registro la Bitacora id:  ${res.data.body.insertId}, titulo: ${bit.titulo}.`
+
+                            let id = `BT -  ${res.data.body.insertId}`
+
+                            registrarHistoria(accion, usuario, id)
+
+                            Router.push(`/bitacoras/listado`)
+
+                        }, 500);
+
+                    }
+
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+
+
+
+        }
+
 
 
 

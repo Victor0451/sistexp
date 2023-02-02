@@ -8,6 +8,7 @@ import Router from "next/router";
 import FormAgenda from '../../components/Agenda/FormAgenda'
 import ModalEvent from "../../components/Agenda/ModalEvent";
 import { v4 as uuidv4 } from 'uuid';
+import { registrarHistoria } from '../../utils/funciones'
 
 const Agenda = () => {
 
@@ -44,8 +45,6 @@ const Agenda = () => {
                 user: user,
                 detail
             }
-
-            console.log(ev)
 
             saveEvents([...events, ev])
 
@@ -140,7 +139,19 @@ const Agenda = () => {
 
                     toastr.success("El evento se registro correctamente", "ATENCION")
 
-                    getEvents()
+                    setTimeout(() => {
+
+                        let accion = `Se creo un nuevo evento ID: ${data.id}, titulo: ${data.title}.`
+
+                        let id = `AG - ${data.id}`
+
+                        registrarHistoria(accion, user, id)
+
+                        getEvents()
+
+                    }, 500);
+
+
 
                 }
 
@@ -159,7 +170,17 @@ const Agenda = () => {
 
                     toastr.success("El evento se actualizo correctamente", "ATENCION")
 
-                    getEvents()
+                    setTimeout(() => {
+
+                        let accion = `Se edito el evento ID: ${data.id}, titulo: ${data.title}.`
+
+                        let id = `AG - ${data.id}`
+
+                        registrarHistoria(accion, user, id)
+
+                        getEvents()
+
+                    }, 500);
 
                 }
 
@@ -171,11 +192,11 @@ const Agenda = () => {
 
     }
 
-    const deleteEvents = async (id) => {
+    const deleteEvents = async (idev) => {
 
         await axios.delete(`/api/agenda/agenda`, {
             params: {
-                id: id
+                id: idev
             }
         })
             .then(res => {
@@ -184,7 +205,17 @@ const Agenda = () => {
 
                     toastr.success("Evento eliminado correctamente", "ATENCION")
 
-                    getEvents()
+                    setTimeout(() => {
+
+                        let accion = `Se elimino el evento ID: ${idev}.`
+
+                        let idh = `AG - ${idev}`
+
+                        registrarHistoria(accion, user, idh)
+
+                        getEvents()
+
+                    }, 500);
                 }
             })
             .catch(error => {

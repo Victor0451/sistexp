@@ -8,6 +8,10 @@ import {
   Text,
   Stack,
   Button,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
 } from '@chakra-ui/react';
 import moment from 'moment';
 import Link from 'next/link';
@@ -37,8 +41,30 @@ const ListadoClientes = ({
     {
       name: "ID",
       selector: row => `${row.idcliente}`,
+      conditionalCellStyles: [
+        {
+          when: row => row.estado === 0,
+          style: {
+            backgroundColor: 'red',
+            color: 'white',
+            '&:hover': {
+              cursor: 'pointer',
+            },
+          },
+        },
+        {
+          when: row => row.estado === 1,
+          style: {
+            backgroundColor: 'green',
+            color: 'white',
+            '&:hover': {
+              cursor: 'pointer',
+            },
+          },
+        },
+      ],
       sortable: true,
-      grow: 0.2
+      grow: 0.1
     },
 
     {
@@ -144,6 +170,9 @@ const ListadoClientes = ({
   return (
     <Box
       p={4}
+      mt={5}
+      border='1px' borderColor='black' borderRadius="xl"
+      mb={4}
     >
       <Stack spacing={4} as={Container} maxW={'3xl'} textAlign={'center'}>
         <Heading fontSize={'3xl'}>Listado de Clientes</Heading>
@@ -151,6 +180,29 @@ const ListadoClientes = ({
           Listado de Clientes registrados en el sistema. Para ingresar un nuevo cliente, hace click en el boton. <Link href={"/clientes/nuevo"}><Button colorScheme={"blue"}>Nuevo Cliente</Button></Link>
         </Text>
       </Stack>
+
+      <Alert
+        mt="10"
+        mb="10"
+        status='info'
+        variant='subtle'
+        flexDirection='column'
+        alignItems='center'
+        justifyContent='center'
+        textAlign='center'
+        height='200px'
+        border='1px'
+        borderColor='black'
+        borderRadius="xl"
+      >
+        <AlertIcon boxSize='40px' mr={0} />
+        <AlertTitle mt={4} mb={1} fontSize='lg'>
+          ATENCION!
+        </AlertTitle>
+        <AlertDescription textAlign="justify">
+          Si el campo ID esta de color VERDE, el cliente esta ACTIVO. En caso de estar en color ROJO, el cliente esta dado de BAJA.
+        </AlertDescription>
+      </Alert>
 
       <Container maxW={'100%'} mt={10}  >
         <DataTable

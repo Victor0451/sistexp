@@ -1,32 +1,65 @@
 import React from "react";
+import {
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+  Button,
+  Container,
+  Box,
+  Image
+
+} from '@chakra-ui/react'
+import Link from "next/link";
 
 const RedirectToLogin = () => {
   return (
-    <div className="container d-flex justify-content-center ">
-      <div className=" border border-dark p-4 mt-4 mb-4 list ">
-        <h1 className="text-center">
-          <strong>
-            <u>
-              No estas logueado, debes iniciar session para acceder al sistema
-            </u>
-          </strong>
-        </h1>
+    <Box
+      mt={5}
+      p={4}
+    >
 
-        <div className="d-flex justify-content-center">
-          <img
-            src="/img/logerr.jpg"
-            className="logerr mt-4 mb-4 border border-dark 
-        "
+      <Container maxW={'6xl'} mt={10} border='1px' borderColor='black' borderRadius="xl" p={4} backgroundColor="whiteAlpha.300">
+
+
+
+
+        <Alert
+          mt="10"
+          mb="10"
+          status='info'
+          variant='subtle'
+          flexDirection='column'
+          alignItems='center'
+          justifyContent='center'
+          textAlign='center'
+          height='600px'
+          border='1px'
+          borderColor='black'
+          borderRadius="xl"
+
+        >
+          <AlertIcon boxSize='40px' mr={0} />
+          <AlertTitle mt={4} mb={1} fontSize='lg'>
+            ATENCION!
+          </AlertTitle>
+
+          <AlertDescription textAlign="justify">
+            Para poder ingresar al sistema, tienes que iniciar session o registrarte. Para loguearte, <Link href={"/"}>¡HAZ CLICK ACA!</Link>.
+          </AlertDescription>
+
+          <Image
+            mt={4}
+            src='/img/error_401.webp'
+            alt='401'
           />
-        </div>
 
-        <div className="mt-4 mb-4 d-flex justify-content-center">
-          <a href="/" className="btn btn-primary">
-            Iniciar Session
-          </a>
-        </div>
-      </div>
-    </div>
+        </Alert>
+      </Container>
+
+
+    </Box>
+
   );
 };
 

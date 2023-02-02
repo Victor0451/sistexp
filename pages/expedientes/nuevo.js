@@ -35,13 +35,13 @@ const Nuevo = () => {
 
                 if (res.data.msg === 'NEXP Encontrado') {
 
-                    let nexp = `${res.data.body.idexpediente + 1}/${moment().format('YYYY')}`
+                    let nexp = `${res.data.body.idexpediente + 1}--${moment().format('YYYY')}`
 
                     guardarNExpediente(nexp)
 
                 } else if (res.data.msg === 'No hay Expedientes') {
 
-                    let nexp = `${res.data.body}/${moment().format('YYYY')}`
+                    let nexp = `${res.data.body}--${moment().format('YYYY')}`
 
                     guardarNExpediente(nexp)
 
@@ -122,6 +122,7 @@ const Nuevo = () => {
             descripcion: descripcionRef.current.value,
             iddenunciado: denunciadoRef.current.value,
             estado: 1,
+            f: "registrar expediente"
 
         }
 
@@ -167,7 +168,6 @@ const Nuevo = () => {
 
 
     }
-
 
     let token = jsCookie.get("token")
 

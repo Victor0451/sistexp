@@ -8,11 +8,11 @@ import {
 
 const ExportarPadron = ({ listado }) => {
 
-    const header = ["ID Exp", "ID Cliente", "ID Denunciado", "Cliente", "Denunciado", "N° Expe Sistema", "Fecha Inicio", "Estado", "Descripcion", "Operador", "Caratula", "N° Expe Fisico"];
+    const header = ["N°", "Fecha", "Titulo", "Descripcion"];
 
     const handleDownloadExcel = () => {
         downloadExcel({
-            fileName: `Listado Expedientes - ${moment().format('DD/MM/YYYY')}`,
+            fileName: `Listado Bitacoras - ${moment().format('DD/MM/YYYY')}`,
             sheet: "Listado",
             tablePayload: {
                 header,

@@ -1,19 +1,18 @@
 import React from 'react'
 import {
+    Box,
     Container,
+    Heading,
+    Text,
+    Stack,
     FormControl,
     FormLabel,
-    FormErrorMessage,
-    FormHelperText,
     Input,
-    Box,
+    Textarea,
     Button,
-    Stack,
     Alert,
     AlertIcon,
-    AlertTitle,
     AlertDescription,
-    CloseButton
 
 } from '@chakra-ui/react'
 
@@ -28,91 +27,80 @@ const FormRegistro = ({
     errores
 }) => {
     return (
-        <Container
-            className=' mt-4 p-4'
-            maxW='container.md'
-            borderWidth='1px'
-            borderRadius='lg'
-            borderColor="blackAlpha.900"
-            shadow='xl'
 
-
+        <Box
+            p={4}
+            mt={5}
+            border='1px' borderColor='black' borderRadius="xl"
+            mb={4}
         >
+            <Stack spacing={4} as={Container} maxW={'3xl'} textAlign={'center'}>
+                <Heading fontSize={'3xl'}>Registro de Usuarios</Heading>
+                <Text fontSize={'xl'}>
+                    Registro de usuarios del sistema.
+                </Text>
+            </Stack>
 
-            <h2>
-                <strong>
-                    <u>
-                        Registrar Usuario
-                    </u>
-                </strong>
-            </h2>
+            <Container maxW={'6xl'} mt={10} border='1px' borderColor='black' borderRadius="xl" p={4} backgroundColor="whiteAlpha.300">
 
+                <Box mt={4} border='1px' borderColor='black' borderRadius="xl" p="4" >
+                    <Box className='row' p={4} alignItems="center" justifyContent="space-between">
 
-            <Box
-                className='row'
-                maxW="container.xl"
-                mt="4"
-                p={4}
-                alignItems='center'
-                borderWidth='1px'
-                borderRadius='lg'
-                borderColor="blackAlpha.500"
-                justifyContent="center"
-                display="flex"
-            >
+                        <FormControl isRequired w="xs" >
+                            <FormLabel >Usuario</FormLabel>
+                            <Input id='usuario' type='text' ref={usuarioRef} />
+                        </FormControl>
 
+                        <FormControl isRequired w="xs" ml="1" >
+                            <FormLabel >Contraseña </FormLabel>
+                            <Input id='contrasena' type='password' ref={contrasenaRef} />
+                        </FormControl>
 
-
-                <FormControl isRequired w="xs" >
-                    <FormLabel >Usuario</FormLabel>
-                    <Input id='usuario' type='text' ref={usuarioRef} />
-                </FormControl>
-
-                <FormControl isRequired w="xs" ml="1" >
-                    <FormLabel >Contraseña </FormLabel>
-                    <Input id='contrasena' type='password' ref={contrasenaRef} />
-                </FormControl>
-
-                <FormControl isRequired w="xs" ml="1" mt="4">
-                    <FormLabel >Apellido</FormLabel>
-                    <Input id='apellido' type='text' ref={apellidoRef} />
-                </FormControl>
+                        <FormControl isRequired w="xs" ml="1" mt="4">
+                            <FormLabel >Apellido</FormLabel>
+                            <Input id='apellido' type='text' ref={apellidoRef} />
+                        </FormControl>
 
 
-                <FormControl isRequired w="xs" ml="1" mt="4">
-                    <FormLabel >Nombre</FormLabel>
-                    <Input id='nombre' type='text' ref={nombreRef} />
-                </FormControl>
+                        <FormControl isRequired w="xs" ml="1" mt="4">
+                            <FormLabel >Nombre</FormLabel>
+                            <Input id='nombre' type='text' ref={nombreRef} />
+                        </FormControl>
 
-            </Box>
+                        {errores ? (
+                            <Alert className='mt-4' status='error' ariant='left-accent'>
+                                <AlertIcon />
+                                <AlertDescription>{errores}.</AlertDescription>
+                            </Alert>
+                        ) : null}
 
-            {errores ? (
-                <Alert className='mt-4' status='error' ariant='left-accent'>
-                    <AlertIcon />
-                    <AlertDescription>{errores}.</AlertDescription>
-                </Alert>
-            ) : null}
+                    </Box>
+
+                    <Box className='row' p="4" justifyContent="end" mt="6">
+
+                        <Button colorScheme='blue' size="sm" onClick={() => registrarUsuario()}>Registrar Usuario</Button>
+
+                        <Link href='/'>
+                            <Button colorScheme='red' size="sm" ml='1'>
+                                Cancelar
+                            </Button>
+                        </Link>
+                    </Box>
+
+                </Box>
+
+            </Container>
+        </Box>
 
 
-            <Box
-                w='100%'
-                mt="4"
-                p={4}
-                justifyContent="center"
-                display="flex"
-                maxW="container.xl"
-            >
-                <Stack spacing={4} direction='row' align='center'>
-                    <Button colorScheme='blue' size="sm" onClick={() => registrarUsuario()}>Registrar Usuario</Button>
 
-                    <Link href='/'>
-                        <Button colorScheme='red' size="sm">
-                            Cancelar
-                        </Button>
-                    </Link>
-                </Stack>
-            </Box>
-        </Container>
+
+
+
+
+
+
+
 
     )
 }

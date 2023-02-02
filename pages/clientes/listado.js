@@ -40,8 +40,6 @@ const Listado = () => {
         })
             .then(res => {
 
-                console.log(res)
-
                 if (res.data.msg === "Clientes Encontrados") {
 
                     guardarClientes(res.data.body)

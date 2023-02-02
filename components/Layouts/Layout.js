@@ -11,8 +11,8 @@ import {
 
 const Layout = (props) => {
 
-
     let token = jsCookie.get("token")
+
 
 
     return (
@@ -45,9 +45,15 @@ const Layout = (props) => {
                 color={useColorModeValue('black', 'white')}
             >
 
-                <Navbar
 
-                />
+                {token ? (
+                    <Navbar f={1} />
+
+                ) : (
+                    <Navbar f={0} />
+
+                )}
+
 
                 <main >{props.children}</main>
             </Box>

@@ -25,6 +25,9 @@ const listado = () => {
     const [clientes, guardarClientes] = useState([])
     const [denuns, guardarDenuns] = useState([])
     const [errores, guardarErrores] = useState(null)
+    const [movimientos, guardarMovimientos] = useState([])
+
+    // EXPEDIENTES
 
     let fechaInicioRef = React.createRef()
     let clienteRef = React.createRef()
@@ -32,6 +35,14 @@ const listado = () => {
     let denunciadoRef = React.createRef()
     let nexpfisicoRef = React.createRef()
     let caratulaRef = React.createRef()
+
+
+    // MOVIMIENTOS
+
+    let fechaMovRef = React.createRef()
+    let provieneRef = React.createRef()
+    let derivaRef = React.createRef()
+    let descripcionMovRef = React.createRef()
 
 
     const traerExpedientes = async () => {
@@ -197,7 +208,7 @@ const listado = () => {
 
                         toastr.success("Expediente editado con exito", "ATENCION")
 
-                        let accion = `Se edito el expediente id:  ${row.idexpediente} N° ${exp.nexpediente}. Caratula ${exp.caratula}.`
+                        let accion = `Se edito el expediente ID: ${row.idexpediente}, caratula ${row.caratula}, N° fisico: ${row.nexpfisico}, N° Sistema: ${row.nexpediente}.`
 
                         let id = `EX -  ${row.idexpediente}`
 
@@ -222,6 +233,152 @@ const listado = () => {
 
 
     }
+
+    const bajaExpediente = async (row) => {
+
+        const datos = {
+            f: 'baja',
+            estado: 0,
+            fecha_baja: moment().format('YYYY-MM-DD HH:mm:ss'),
+            id: row.idexpediente
+        }
+
+        await axios.put('/api/expedientes/expediente/', datos)
+            .then(res => {
+                console.log(res.data)
+                if (res.data.msg === 'Expediente Baja') {
+
+                    toastr.success("El expediente fue dado de baja con exito", "ATENCION")
+
+                    let accion = `Se dio de baja el expediente ID: ${row.idexpediente}, caratula ${row.caratula}, N° fisico: ${row.nexpfisico}, N° Sistema: ${row.nexpediente}.`
+
+                    let id = `EX - ${row.idexpediente}`
+
+                    registrarHistoria(accion, usuario, id)
+
+                    setTimeout(() => {
+                        traerExpedientes()
+                    }, 500);
+
+                }
+
+            })
+
+            .catch(error => {
+                console.log(error)
+                toastr.error("Ocurrio un error al registrar el usuario")
+
+            })
+
+    }
+
+    const traerMovimientos = async (exp) => {
+
+        guardarMovimientos([])
+
+        await axios.get('/api/expedientes/expediente', {
+            params: {
+                f: 'traer movimientos',
+                id: exp
+            }
+        }).then(res => {
+
+            if (res.data.msg === "Movimientos Encontrados") {
+
+                guardarMovimientos(res.data.body)
+
+            } else if (res.data.msg === "No hay Movimientos") {
+
+                toastr.info("No hay movimientos registrados", "ATENCION")
+
+            }
+
+        })
+            .catch(error => {
+                console.log(error)
+            })
+
+    }
+
+    const regMovimiento = async (row) => {
+
+        let mov = {
+
+            idexpediente: row.idexpediente,
+            nexpediente: row.nexpediente,
+            fecha_movimiento: moment(fechaMovRef.current.value).format('YYYY-MM-DD'),
+            proviene: provieneRef.current.value,
+            deriva: derivaRef.current.value,
+            descripcion: descripcionMovRef.current.value,
+            estado: 1,
+            operador: usuario,
+            f: 'nuevo movimiento'
+        }
+
+
+        await axios.post(`/api/expedientes/expediente`, mov)
+            .then(res => {
+
+                if (res.data.msg === 'Movimiento Registrado')
+
+                    toastr.success("Se registro el movimiento")
+
+                setTimeout(() => {
+
+                    let accion = `Se registro moviemiento N°: ${res.data.body.insertId} en el expediente ID: ${row.idexpediente}, N° fisico: ${row.nexpfisico}, N° Sistema: ${row.nexpediente}.`
+
+                    let id = `MV -  ${row.idexpediente}`
+
+                    registrarHistoria(accion, usuario, id)
+
+                    traerMovimientos(row.idexpediente)
+
+                }, 500);
+
+
+            })
+            .catch(error => {
+                console.log(error)
+            })
+
+    }
+
+    const bajaMovim = async (row) => {
+
+
+        await axios.delete('/api/expedientes/expediente/', {
+            params: {
+                id: row.idmovimientos,
+            }
+        })
+            .then(res => {
+
+                if (res.data.msg === 'Movimiento Eliminado') {
+
+                    toastr.success("El movimiento fue dado de baja con exito", "ATENCION")
+
+                    let accion = `Se dio de baja el movimiento ID: ${row.idmovimientos} del expediente N° Sistema: ${row.nexpediente}.`
+
+                    let id = `MV - ${row.idmovimientos}`
+
+                    registrarHistoria(accion, usuario, id)
+
+                    setTimeout(() => {
+                        traerMovimientos(row.idexpediente)
+                    }, 500);
+
+                }
+
+            })
+
+            .catch(error => {
+                console.log(error)
+                toastr.error("Ocurrio un error al registrar el usuario")
+
+            })
+
+    }
+
 
     let token = jsCookie.get("token")
 
@@ -257,8 +414,17 @@ const listado = () => {
                     caratulaRef={caratulaRef}
                     clientes={clientes}
                     denuns={denuns}
+                    movimientos={movimientos}
                     editarExpediente={editarExpediente}
                     errores={errores}
+                    bajaExpediente={bajaExpediente}
+                    traerMovimientos={traerMovimientos}
+                    fechaMovRef={fechaMovRef}
+                    provieneRef={provieneRef}
+                    derivaRef={derivaRef}
+                    descripcionMovRef={descripcionMovRef}
+                    regMovimiento={regMovimiento}
+                    bajaMovim={bajaMovim}
                 />
             ) : (
 

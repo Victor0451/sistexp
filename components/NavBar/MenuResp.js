@@ -10,7 +10,9 @@ import { CloseIcon } from '@chakra-ui/icons'
 
 const MenuResp = ({
     display,
-    changeDisplay
+    changeDisplay,
+    cerrarSesion,
+    f
 }) => {
 
     return (
@@ -26,6 +28,8 @@ const MenuResp = ({
             overflowY="auto"
             flexDir="column"
         >
+
+
             <Flex justify="flex-end" >
                 <IconButton
                     mt={2}
@@ -57,6 +61,34 @@ const MenuResp = ({
 
                     >
                         Home
+                    </Button>
+                </Link>
+
+                <Link href="/agenda/agenda" passHref>
+                    <Button
+
+                        variant="ghost"
+                        aria-label="Home"
+                        my={5}
+                        w="100%"
+                        color={"black"}
+
+                    >
+                        Agenda
+                    </Button>
+                </Link>
+
+                <Link href="/bitacora/listado" passHref>
+                    <Button
+
+                        variant="ghost"
+                        aria-label="Home"
+                        my={5}
+                        w="100%"
+                        color={"black"}
+
+                    >
+                        Bitacora
                     </Button>
                 </Link>
 
@@ -101,7 +133,44 @@ const MenuResp = ({
                         Expedientes
                     </Button>
                 </Link>
+
+                <Link href="/auth/listado" passHref>
+
+                    <Button
+
+                        variant="ghost"
+                        aria-label="Home"
+                        my={5}
+                        w="100%"
+                        color={"black"}
+
+                    >
+                        Gestion de Usuarios
+                    </Button>
+                </Link>
+
+                <Button
+
+                    variant="ghost"
+                    aria-label="Home"
+                    my={5}
+                    w="100%"
+                    color={"black"}
+                    onClick={cerrarSesion}
+
+                >
+                    Cerrar Sesion
+                </Button>
+
             </Flex>
+
+
+
+
+
+
+
+
         </Flex>
     )
 }

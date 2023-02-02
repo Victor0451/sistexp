@@ -62,7 +62,8 @@ export default async function handlerProductos(req, res) {
                         e.descripcion,
                         e.operador,
                         e.caratula,
-                        e.nexpfisico
+                        e.nexpfisico,
+                        e.estado
                     FROM expedientes as e
                     INNER JOIN clientes as c on c.idcliente = e.idcliente
                     INNER JOIN denunciados as d on d.iddenunciado = e.iddenunciado
@@ -88,49 +89,130 @@ export default async function handlerProductos(req, res) {
                 console.log(error);
             }
 
+        } else if (req.query.f && req.query.f === 'traer movimientos') {
+
+            try {
+
+                const result = await excuteQuery({
+
+                    query:
+                        `
+                    SELECT 
+                       *
+                    FROM movimientos_expediente
+                    WHERE idexpediente = ${req.query.id}
+                    
+                    `,
+
+                });
+
+                if (result[0]) {
+
+                    res.json({
+                        msg: "Movimientos Encontrados",
+                        body: result
+                    })
+
+                } else if (!result[0]) {
+
+                    res.json({
+                        msg: "No hay Movimientos",
+                    })
+
+                }
+
+            } catch (error) {
+                console.log(error);
+            }
+
         }
 
     } else if (method === "POST") {
 
-        const exp = {
+        if (req.body.f && req.body.f === 'registrar expediente') {
 
-            fecha_carga: req.body.fecha_carga,
-            fecha_inicio: req.body.fecha_inicio,
-            nexpediente: req.body.nexpediente,
-            nexpfisico: req.body.nexpfisico,
-            caratula: req.body.caratula,
-            ano: req.body.ano,
-            idcliente: req.body.idcliente,
-            operador: req.body.operador,
-            descripcion: req.body.descripcion,
-            iddenunciado: req.body.iddenunciado,
-            estado: req.body.estado,
+            const exp = {
 
-        }
+                fecha_carga: req.body.fecha_carga,
+                fecha_inicio: req.body.fecha_inicio,
+                nexpediente: req.body.nexpediente,
+                nexpfisico: req.body.nexpfisico,
+                caratula: req.body.caratula,
+                ano: req.body.ano,
+                idcliente: req.body.idcliente,
+                operador: req.body.operador,
+                descripcion: req.body.descripcion,
+                iddenunciado: req.body.iddenunciado,
+                estado: req.body.estado,
 
-        try {
-
-            const result = await excuteQuery({
-                query: `INSERT INTO expedientes 
-                        (fecha_inicio, nexpediente, ano, idcliente, operador, descripcion, iddenunciado, estado, fecha_carga, nexpfisico, caratula) 
-                        VALUES('${exp.fecha_inicio}', '${exp.nexpediente}', ${exp.ano}, ${exp.idcliente}, '${exp.operador}', '${exp.descripcion}', ${exp.iddenunciado}, ${exp.estado}, '${exp.fecha_carga}', '${exp.nexpfisico}', '${exp.caratula}')`,
-
-            });
-
-
-            if (result) {
-                res.json({
-                    msg: "Expediente Registrado",
-                    body: result
-                })
             }
 
+            try {
 
-        } catch (error) {
-            console.log(error);
+                const result = await excuteQuery({
+                    query: `INSERT INTO expedientes 
+                            (fecha_inicio, nexpediente, ano, idcliente, operador, descripcion, iddenunciado, estado, fecha_carga, nexpfisico, caratula) 
+                            VALUES('${exp.fecha_inicio}', '${exp.nexpediente}', ${exp.ano}, ${exp.idcliente}, '${exp.operador}', '${exp.descripcion}', ${exp.iddenunciado}, ${exp.estado}, '${exp.fecha_carga}', '${exp.nexpfisico}', '${exp.caratula}')`,
+
+                });
+
+
+                if (result) {
+                    res.json({
+                        msg: "Expediente Registrado",
+                        body: result
+                    })
+                }
+
+
+            } catch (error) {
+                console.log(error);
+            }
+
+            return exp;
+
+        } else if (req.body.f && req.body.f === 'nuevo movimiento') {
+
+
+            let mov = {
+
+                idexpediente: req.body.idexpediente,
+                nexpediente: req.body.nexpediente,
+                fecha_movimiento: req.body.fecha_movimiento,
+                proviene: req.body.proviene,
+                deriva: req.body.deriva,
+                descripcion: req.body.descripcion,
+                estado: req.body.estado,
+                operador: req.body.operador,
+                f: req.body.f,
+            }
+
+            try {
+
+                const result = await excuteQuery({
+                    query: `INSERT INTO movimientos_expediente
+                        (idexpediente, nexpediente, fecha_movimiento, proviene, deriva, detalle, estado, operador) 
+                        VALUES(${mov.idexpediente}, '${mov.nexpediente}', '${mov.fecha_movimiento}', '${mov.proviene}', '${mov.deriva}', '${mov.descripcion}', ${mov.estado}, '${mov.operador}')`,
+
+                });
+
+
+                if (result) {
+                    res.json({
+                        msg: "Movimiento Registrado",
+                        body: result
+                    })
+                }
+
+
+            } catch (error) {
+                console.log(error);
+            }
+
+            return mov;
+
+
         }
-
-        return exp;
 
     } else if (method === "PUT") {
 
@@ -145,7 +227,7 @@ export default async function handlerProductos(req, res) {
                 idcliente: req.body.idcliente,
                 descripcion: req.body.descripcion,
                 iddenunciado: req.body.iddenunciado,
-                id:req.body.id
+                id: req.body.id
 
             }
 
@@ -252,6 +334,32 @@ export default async function handlerProductos(req, res) {
 
 
         }
+    } else if (method === "DELETE") {
+
+        try {
+
+            const result = await excuteQuery({
+                query:
+                    `                        
+                        DELETE 
+                        FROM movimientos_expediente                         
+                        WHERE idmovimientos = ${req.query.id}
+                        
+                        `
+            });
+
+
+            if (result) {
+                res.json({
+                    msg: "Movimiento Eliminado"
+                })
+            }
+
+        } catch (error) {
+            console.log(error);
+
+        }
+
     }
 
 

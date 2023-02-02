@@ -14,7 +14,7 @@ export default async function handlerBitacora(req, res) {
             const result = await excuteQuery({
 
                 query: `SELECT * 
-                            FROM agenda                             
+                            FROM bitacoras                             
                             `,
 
             });
@@ -22,14 +22,14 @@ export default async function handlerBitacora(req, res) {
             if (result[0]) {
 
                 res.json({
-                    msg: "Eventos Encontrados",
+                    msg: "Bitacoras Encontradas",
                     body: result
                 })
 
             } else if (!result[0]) {
 
                 res.json({
-                    msg: "No hay Eventos"
+                    msg: "No hay Bitacoras"
                 })
 
             }
@@ -53,7 +53,7 @@ export default async function handlerBitacora(req, res) {
 
 
             const result = await excuteQuery({
-                query: `INSERT INTO bitacora 
+                query: `INSERT INTO bitacoras 
                         (fecha, titulo, descripcion) 
                         VALUES('${bit.fecha}', '${bit.titulo}', '${bit.descripcion}')`,
 
@@ -80,12 +80,11 @@ export default async function handlerBitacora(req, res) {
 
 
 
-        let evE = {
-            id: req.body.id,
-            title: req.body.title,
-            start: req.body.start,
-            end: req.body.end,
-            allDay: req.body.allDay,
+        let bit = {
+            idbitacora: req.body.idbitacora,
+            fecha: req.body.fecha,
+            titulo: req.body.titulo,
+            descripcion: req.body.descripcion,
 
         }
 
@@ -94,12 +93,12 @@ export default async function handlerBitacora(req, res) {
             const result = await excuteQuery({
                 query:
                     `                        
-                        UPDATE agenda 
-                        SET title = '${evE.title}', 
-                            start = '${evE.start}',
-                            end= '${evE.end}',
-                            allDay = ${evE.allDay}                            
-                        WHERE id = '${evE.id}'
+                        UPDATE bitacoras
+                        SET fecha = '${bit.fecha}', 
+                            titulo = '${bit.titulo}',
+                            descripcion= '${bit.descripcion}'
+                            
+                        WHERE idbitacora = ${bit.idbitacora}
                         
                         `
 
@@ -108,7 +107,7 @@ export default async function handlerBitacora(req, res) {
 
             if (result) {
                 res.json({
-                    msg: "Evento Editado",
+                    msg: "Bitacora Editada",
                     body: result
                 })
 
@@ -119,7 +118,7 @@ export default async function handlerBitacora(req, res) {
 
         }
 
-        return evE;
+        return bit;
 
     } else if (method === "DELETE") {
 
@@ -129,8 +128,8 @@ export default async function handlerBitacora(req, res) {
                 query:
                     `                        
                         DELETE 
-                        FROM agenda                         
-                        WHERE id = '${req.query.id}'
+                        FROM bitacoras                         
+                        WHERE idbitacora = '${req.query.id}'
                         
                         `
             });
@@ -138,7 +137,7 @@ export default async function handlerBitacora(req, res) {
 
             if (result) {
                 res.json({
-                    msg: "Evento Eliminado"
+                    msg: "Bitacora Eliminada"
                 })
             }
 

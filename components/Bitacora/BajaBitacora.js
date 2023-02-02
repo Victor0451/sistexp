@@ -13,8 +13,8 @@ import {
 
 import { DeleteIcon } from '@chakra-ui/icons'
 
-const BajaExpediente = ({
-    bajaExpediente,
+const BajaClientes = ({
+    bajaBitacora,
     row
 }) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -47,14 +47,14 @@ const BajaExpediente = ({
                         </AlertDialogHeader>
 
                         <AlertDialogBody>
-                            ¿Estas seguro que deseas dar de baja al cliente?
+                            ¿Estas seguro que deseas eliminar la bitacora?
                         </AlertDialogBody>
 
                         <AlertDialogFooter>
                             <Button ref={cancelRef} onClick={onClose}>
                                 Cancelar
                             </Button>
-                            <Button colorScheme='red' onClick={() => bajaExpediente(row)} onClickCapture={onClose} ml={3}>
+                            <Button colorScheme='red' onClick={() => bajaBitacora(row)} onClickCapture={onClose} ml={3}>
                                 Aceptar
                             </Button>
                         </AlertDialogFooter>
@@ -65,4 +65,4 @@ const BajaExpediente = ({
     )
 }
 
-export default BajaExpediente
+export default BajaClientes

@@ -32,7 +32,10 @@ const FormNuevoDenunciado = ({
 }) => {
     return (
         <Box
-            p={4}
+        p={4}
+        mt={5}
+        border='1px' borderColor='black' borderRadius="xl"
+        mb={4}
         >
             <Stack spacing={4} as={Container} maxW={'3xl'} textAlign={'center'}>
                 <Heading fontSize={'3xl'}>Registro de Denunciados</Heading>

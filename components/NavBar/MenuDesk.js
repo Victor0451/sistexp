@@ -35,6 +35,20 @@ const MenuDesk = ({ }) => {
 
             <Menu>
                 <MenuButton ml={1} as={Button} rightIcon={<ChevronDownIcon />}>
+                    Bitacora
+                </MenuButton>
+                <MenuList>
+                    <Link href="/bitacora/nuevo">
+                        <MenuItem>Nueva bitacora</MenuItem>
+                    </Link>
+                    <Link href="/bitacora/listado">
+                        <MenuItem>Listado de bitacoras</MenuItem>
+                    </Link>
+                </MenuList>
+            </Menu>
+
+            <Menu>
+                <MenuButton ml={1} as={Button} rightIcon={<ChevronDownIcon />}>
                     Clientes
                 </MenuButton>
                 <MenuList>

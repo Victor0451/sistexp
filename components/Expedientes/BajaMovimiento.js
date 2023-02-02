@@ -13,9 +13,9 @@ import {
 
 import { DeleteIcon } from '@chakra-ui/icons'
 
-const BajaExpediente = ({
-    bajaExpediente,
-    row
+const BajaMovimientos = ({
+    row,
+    bajaMovim
 }) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const cancelRef = React.useRef()
@@ -47,14 +47,14 @@ const BajaExpediente = ({
                         </AlertDialogHeader>
 
                         <AlertDialogBody>
-                            ¿Estas seguro que deseas dar de baja al cliente?
+                            ¿Estas seguro que deseas eliminar el movimiento?
                         </AlertDialogBody>
 
                         <AlertDialogFooter>
                             <Button ref={cancelRef} onClick={onClose}>
                                 Cancelar
                             </Button>
-                            <Button colorScheme='red' onClick={() => bajaExpediente(row)} onClickCapture={onClose} ml={3}>
+                            <Button colorScheme='red' onClickCapture={onClose} onClick={() => { bajaMovim(row) }} ml={3}>
                                 Aceptar
                             </Button>
                         </AlertDialogFooter>
@@ -65,4 +65,4 @@ const BajaExpediente = ({
     )
 }
 
-export default BajaExpediente
+export default BajaMovimientos

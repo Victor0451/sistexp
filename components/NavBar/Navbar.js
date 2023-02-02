@@ -10,12 +10,13 @@ import { HamburgerIcon } from '@chakra-ui/icons'
 import jsCookie from 'js-cookie'
 import Router from 'next/router'
 import toastr from 'toastr'
-import Options from './Opciones'
+import Opciones from './Opciones'
 import MenuDesk from './MenuDesk'
 import MenuResp from './MenuResp'
 
 
-const Navbar = ({ }) => {
+const Navbar = ({ f }) => {
+
 
     const { colorMode, toggleColorMode } = useColorMode()
     const isDark = colorMode === 'dark'
@@ -38,72 +39,79 @@ const Navbar = ({ }) => {
     const [resp] = useMediaQuery('(min-width: 767px)')
 
     return (
-        <div>
-            <Box className='row'>
-                <Flex className='col-md-10'>
+
+        <Box className='row'>
+
+            <Flex className='col-md-10'>
+                <Flex
+                    //position="fixed"
+                    top="1rem"
+                    right="1rem"
+                    align="center"
+
+                >
+                    {/* Desktop */}
                     <Flex
-                        //position="fixed"
-                        top="1rem"
-                        right="1rem"
-                        align="center"
+                        display={['none', 'none', 'flex', 'flex']}
 
                     >
-                        {/* Desktop */}
-                        <Flex
-                            display={['none', 'none', 'flex', 'flex']}
-
-                        >
 
 
-                            <MenuDesk />
+                        <MenuDesk />
 
 
 
-
-                        </Flex>
-
-                        {/* Mobile */}
-                        <IconButton
-                            aria-label="Open Menu"
-                            size="lg"
-                            mr={2}
-                            icon={
-                                <HamburgerIcon />
-                            }
-                            onClick={() => changeDisplay('flex')}
-                            display={['flex', 'flex', 'none', 'none']}
-                        />
-
-                        {resp === false ? (
-                            <Options
-                                cerrarSesion={cerrarSesion}
-                                isDark={isDark}
-                                toggleColorMode={toggleColorMode}
-
-                            />
-                        ) : null}
 
                     </Flex>
 
-                    {/* Mobile Content */}
-                    <MenuResp
-                        display={display}
-                        changeDisplay={changeDisplay}
+                    {/* Mobile */}
+                    <IconButton
+                        aria-label="Open Menu"
+                        size="lg"
+                        mr={2}
+                        icon={
+                            <HamburgerIcon />
+                        }
+                        onClick={() => changeDisplay('flex')}
+                        display={['flex', 'flex', 'none', 'none']}
                     />
+
                 </Flex>
 
-                {resp === true ? (
-                    <Options
+                {/* Mobile Content */}
+                <MenuResp
+                    display={display}
+                    changeDisplay={changeDisplay}
+                    cerrarSesion={cerrarSesion}
+                    f={f}
+                />
+
+            </Flex>
+
+
+
+            <>
+                {resp === true && f === 1 ? (
+
+                    <Opciones
                         cerrarSesion={cerrarSesion}
                         isDark={isDark}
                         toggleColorMode={toggleColorMode}
 
                     />
                 ) : null}
+            </>
 
 
-            </Box >
-        </div >
+
+
+
+
+
+
+        </Box >
+
+
     )
 }
 export default Navbar
